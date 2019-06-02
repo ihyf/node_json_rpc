@@ -2,9 +2,9 @@ const http = require('http');
 const fs = require('fs');
 const url = require('url');
 const RPC = require('./jsonrpc');
-// const ExplprerWallet = require('js-oip/lib/modules/wallets/ExplorerWallet').default;
-// const Insight = require('insight-explorer').Insight;
-// let explorer = new Insight("https://livenet.flocha.in/api");
+const ExplprerWallet = require('js-oip/lib/modules/wallets/ExplorerWallet').default;
+const Insight = require('insight-explorer').Insight;
+let explorer = new Insight("https://livenet.flocha.in/api");
 
 RPC.methods = {
     demo(t) {
@@ -17,9 +17,19 @@ RPC.methods = {
     aaa(b, c) {
         return b + c;
     },
-    // bbb(){
-    //     return explorer.getAddressProperties("FBjBWwd4Bm8MAYdJqqLB2pvDXzP1AomBXK", "balance");
-    // },
+    //获取交易记录
+    get_transactions(address){
+        var data;
+        explorer.getTransactionsForAddress("FBjBWwd4Bm8MAYdJqqLB2pvDXzP1AomBXK").then(result => {
+            data = result;
+        });
+        let setTime = setInterval(()=>{
+            if(!data==undefined){
+                clearInterval(setTime);
+                return data
+            }
+        },10);
+    },
     eee: (a, v) => {
         return a * v;
     },
@@ -62,6 +72,16 @@ fetch('/jsonrpc', {
     console.log(v)
 })
 */
+
+function sleep(numberMillis) {
+    var now = new Date();
+    var exitTime = now.getTime() + numberMillis;
+    while (true) {
+        now = new Date();
+        if (now.getTime() > exitTime)
+            return;
+    }
+}
 const jsonrpc = RPC.handleRequest;
 
 const routes = {//<====路由
