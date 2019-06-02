@@ -1,10 +1,14 @@
 {
-  "name": "untitled1",
+  "name": "node_json_rpc",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "core-js": "^2.6.5",
+    "js-oip": "^2.1.0"
   },
   "keywords": [],
   "author": "",

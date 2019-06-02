@@ -2,6 +2,8 @@ const http = require('http');
 const fs = require('fs');
 const url = require('url');
 const RPC = require('./jsonrpc');
+// const ExplprerWallet = require('js-oip/lib/modules/wallets/ExplorerWallet').default;
+const Insight = require('insight-explorer').Insight;
 RPC.methods = {
     demo(t) {
         return "hello" + (t || "word");
@@ -13,8 +15,15 @@ RPC.methods = {
     aaa(b, c) {
         return b + c;
     },
+    bbb(){
+        let explorer = new Insight("https://livenet.flocha.in/api");
+        return explorer.getAddressProperties("FBjBWwd4Bm8MAYdJqqLB2pvDXzP1AomBXK", "balance");
+    },
     eee: (a, v) => {
         return a * v;
+    },
+    getBalance(address) {
+
     },
     ccc: (o) => {
         //异常模拟
