@@ -4,24 +4,20 @@ const url = require('url');
 const RPC = require('./jsonrpc');
 const ExplprerWallet = require('js-oip/lib/modules/wallets/ExplorerWallet').default;
 const Insight = require('insight-explorer').Insight;
-let explorer = new Insight("https://livenet.flocha.in/api");
+
+var saveWif;
+var saveValue;
+var saveAddress;
 
 RPC.methods = {
-    demo(t) {
-        return "hello" + (t || "word");
-    },
-    asd(a) {
-        console.log(a);
-        return 999;
-    },
-    aaa(b, c) {
-        return b + c;
-    },
-    //获取交易记录
-    get_transactions(address){
+    //获取余额
+    get_balance(address){
+        if (address != null)
+            saveAddress = address;
+        let explorer = new Insight("https://livenet.flocha.in/api");
         var data;
         var promise = new Promise((resolve, reject)=>{
-            explorer.getTransactionsForAddress("FBjBWwd4Bm8MAYdJqqLB2pvDXzP1AomBXK")
+            explorer.getAddressProperties(saveAddress, "balance")
                 .then(result => {
                     // console.log("result是啥：",result);
                     data = result;
@@ -32,30 +28,86 @@ RPC.methods = {
                     reject(err)
                 })
         })
-
-
         return promise
     },
-    eee: (a, v) => {
-        return a * v;
+    //获取交易记录
+    get_transactions(address){
+        if (address != null)
+            saveAddress = address;
+        let explorer = new Insight("https://livenet.flocha.in/api");
+        var data;
+        var promise = new Promise((resolve, reject)=>{
+            explorer.getTransactionsForAddress(saveAddress)
+                .then(result => {
+                    // console.log("result是啥：",result);
+                    data = result;
+                    resolve(data)
+                })
+                .catch(err=>{
+                    console.log("报错了");
+                    reject(err)
+                })
+        })
+        return promise
     },
-    getBalance(address) {
-
+    //查询交易手续费
+    get_transaction_fee(wif, address, value){
+        if (wif != null)
+            saveWif = wif;
+        if (address != null)
+            saveAddress = address;
+        if (value != null)
+            saveValue = value;
+        let explorer = new Insight("https://livenet.flocha.in/api");
+        var explprerWallet = new ExplprerWallet({ network: 'mainnet', wif: saveWif });
+        var output = {
+            address: saveAddress,
+            value: 1e8*saveValue
+        }
+        var data;
+        var promise = new Promise((resolve, reject)=>{
+            explprerWallet.buildInputsAndOutputs('', output)
+                .then(result => {
+                    // console.log("result是啥：",result);
+                    data = result;
+                    resolve(data)
+                })
+                .catch(err=>{
+                    console.log("报错了");
+                    reject(err)
+                })
+        })
+        return promise
     },
-    ccc: (o) => {
-        //异常模拟
-        return o / asdsad;
+    //转账
+    set_transaction(wif, address, value){
+        if (wif != null)
+            saveWif = wif;
+        if (address != null)
+            saveAddress = address;
+        if (value != null)
+            saveValue = value;
+        let explorer = new Insight("https://livenet.flocha.in/api");
+        var explprerWallet = new ExplprerWallet({ network: 'mainnet', wif: saveWif });
+        var output = {
+            address: saveAddress,
+            value: 1e8*saveValue
+        }
+        var data;
+        var promise = new Promise((resolve, reject)=>{
+            explprerWallet.sendTx(output, '')
+                .then(result => {
+                    // console.log("result是啥：",result);
+                    data = result;
+                    resolve(data)
+                })
+                .catch(err=>{
+                    console.log("报错了");
+                    reject(err)
+                })
+        })
+        return promise
     },
-    //几种写法
-    test(a, b, c, d, e) {
-        return { a, b, c, d, e };
-    },
-    test2:function(a, b, c, d, e) {
-        return { a, b, c, d, e };
-    },
-    test3:(a, b, c, d, e)=>{
-        return { a, b, c, d, e };
-    }
 };
 /*
 fetch('/jsonrpc', {

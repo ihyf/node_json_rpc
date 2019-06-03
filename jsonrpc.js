@@ -95,16 +95,33 @@ JSONRPC.handleRequest = function (rpc, respond) {
                 }));
             }
         } else {
-            console.log("method是啥：",method);
+            // console.log("method是啥：",method);
             // if(result==Promise)
-
-            if(rpc.method=="get_transactions"){
+            if(rpc.method=="get_balance"){
                 method()
                     .then(data=>{
                         // console.log("data是啥：",data);
                         respond(normalize(rpc, { result: data }));
                     })
-            }else {
+            } else if(rpc.method=="get_transactions"){
+                method()
+                    .then(data=>{
+                        // console.log("data是啥：",data);
+                        respond(normalize(rpc, { result: data }));
+                    })
+            } else if(rpc.method=="get_transaction_fee"){
+                method()
+                    .then(data=>{
+                        // console.log("data是啥：",data);
+                        respond(normalize(rpc, { result: data }));
+                    })
+            } else if(rpc.method=="set_transaction"){
+                method()
+                    .then(data=>{
+                        // console.log("data是啥：",data);
+                        respond(normalize(rpc, { result: data }));
+                    })
+            } else {
                 respond(normalize(rpc, { result: result }));
             }
         }
