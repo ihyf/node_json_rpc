@@ -20,15 +20,21 @@ RPC.methods = {
     //获取交易记录
     get_transactions(address){
         var data;
-        explorer.getTransactionsForAddress("FBjBWwd4Bm8MAYdJqqLB2pvDXzP1AomBXK").then(result => {
-            data = result;
-        });
-        let setTime = setInterval(()=>{
-            if(!data==undefined){
-                clearInterval(setTime);
-                return data
-            }
-        },10);
+        var promise = new Promise((resolve, reject)=>{
+            explorer.getTransactionsForAddress("FBjBWwd4Bm8MAYdJqqLB2pvDXzP1AomBXK")
+                .then(result => {
+                    // console.log("result是啥：",result);
+                    data = result;
+                    resolve(data)
+                })
+                .catch(err=>{
+                    console.log("报错了");
+                    reject(err)
+                })
+        })
+
+
+        return promise
     },
     eee: (a, v) => {
         return a * v;
@@ -155,3 +161,4 @@ http.createServer(function (request, response) {
         routes["/404"](request, response);
     }
 }).listen(8889);
+console.log("服务已启动")

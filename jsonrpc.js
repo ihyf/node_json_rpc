@@ -61,6 +61,7 @@ JSONRPC.handleRequest = function (rpc, respond) {
     if (typeof method !== 'function') return respond(normalize(rpc, { error: { code: -32601 } }));// 函数或方法未找到
     //参数解析
     let params = [];
+
     // 未命名参数
     if (Array.isArray(rpc.params)) {
         params = rpc.params;
@@ -94,7 +95,18 @@ JSONRPC.handleRequest = function (rpc, respond) {
                 }));
             }
         } else {
-            respond(normalize(rpc, { result: result }));
+            console.log("method是啥：",method);
+            // if(result==Promise)
+
+            if(rpc.method=="get_transactions"){
+                method()
+                    .then(data=>{
+                        // console.log("data是啥：",data);
+                        respond(normalize(rpc, { result: data }));
+                    })
+            }else {
+                respond(normalize(rpc, { result: result }));
+            }
         }
     };
     // 追加 reply 函数作为最后一个参数
