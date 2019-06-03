@@ -12,8 +12,10 @@ var saveAddress;
 RPC.methods = {
     //获取余额
     get_balance(address){
-        if (address != null)
+        if (address != null) {
             saveAddress = address;
+        }
+
         let explorer = new Insight("https://livenet.flocha.in/api");
         var data;
         var promise = new Promise((resolve, reject)=>{
@@ -24,7 +26,7 @@ RPC.methods = {
                     resolve(data)
                 })
                 .catch(err=>{
-                    console.log("报错了");
+                    console.log("get_balance error");
                     reject(err)
                 })
         })
@@ -44,7 +46,7 @@ RPC.methods = {
                     resolve(data)
                 })
                 .catch(err=>{
-                    console.log("报错了");
+                    console.log("get_transactions error");
                     reject(err)
                 })
         })
@@ -73,7 +75,7 @@ RPC.methods = {
                     resolve(data)
                 })
                 .catch(err=>{
-                    console.log("报错了");
+                    console.log("get_transaction_fee error");
                     reject(err)
                 })
         })
@@ -102,34 +104,14 @@ RPC.methods = {
                     resolve(data)
                 })
                 .catch(err=>{
-                    console.log("报错了");
+                    console.log("set_transaction error");
                     reject(err)
                 })
         })
         return promise
     },
 };
-/*
-fetch('/jsonrpc', {
-    headers: {
-        "Content-Type": "application/json"
-    },
-    method: 'POST',
-    body: JSON.stringify([
-		 { "jsonrpc": "2.0", "method": "test", "id": 1, "params": [1,2,3,4,5] },
-		{ "jsonrpc": "2.0", "method": "test2", "id": 2, "params": [1,2,3,4,5] },
-		{ "jsonrpc": "2.0", "method": "test3", "id": 3, "params":  [1,2,3,4,5] },
-        { "jsonrpc": "2.0", "method": "test", "id": 4, "params": {a:1,b:2,c:3,d:4,e:5} },
-		{ "jsonrpc": "2.0", "method": "test2", "id": 5, "params": {a:1,b:2,c:3,d:4,e:5} },
-		{ "jsonrpc": "2.0", "method": "test3", "id": 6, "params": {a:1,b:2,c:3,d:4,e:5} },
-	])
-}).then(v => {
 
-    return v.json();
-}).then(v => {
-    console.log(v)
-})
-*/
 
 function sleep(numberMillis) {
     var now = new Date();

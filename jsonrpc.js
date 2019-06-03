@@ -103,11 +103,17 @@ JSONRPC.handleRequest = function (rpc, respond) {
                         // console.log("data是啥：",data);
                         respond(normalize(rpc, { result: data }));
                     })
+                    .catch(err=>{
+                        respond(normalize(rpc, {result: {"error": "get_balance fail", "code": "50001"}}))
+                    })
             } else if(rpc.method=="get_transactions"){
                 method()
                     .then(data=>{
                         // console.log("data是啥：",data);
                         respond(normalize(rpc, { result: data }));
+                    })
+                    .catch(err=>{
+                        respond(normalize(rpc, {result: {"error": "get_transactions fail", "code": "50002"}}))
                     })
             } else if(rpc.method=="get_transaction_fee"){
                 method()
@@ -115,11 +121,17 @@ JSONRPC.handleRequest = function (rpc, respond) {
                         // console.log("data是啥：",data);
                         respond(normalize(rpc, { result: data }));
                     })
+                    .catch(err=>{
+                        respond(normalize(rpc, {result: {"error": "get_transaction_fee fail", "code": "50003"}}))
+                    })
             } else if(rpc.method=="set_transaction"){
                 method()
                     .then(data=>{
                         // console.log("data是啥：",data);
                         respond(normalize(rpc, { result: data }));
+                    })
+                    .catch(err=>{
+                        respond(normalize(rpc, {result: {"error": "set_transaction fail", "code": "50004"}}))
                     })
             } else {
                 respond(normalize(rpc, { result: result }));
