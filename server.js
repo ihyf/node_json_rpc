@@ -5,21 +5,20 @@ const RPC = require('./jsonrpc');
 const ExplprerWallet = require('js-oip/lib/modules/wallets/ExplorerWallet').default;
 const Insight = require('insight-explorer').Insight;
 
-var saveWif;
-var saveValue;
-var saveAddress;
 
 RPC.methods = {
     //获取余额
     get_balance(address){
-        if (address != null) {
-            saveAddress = address;
+
+        //目前这句有问题 todo
+        if (address == null || address == ""){
+            return {"error":"address is null", "code":"40001"}
         }
 
         let explorer = new Insight("https://livenet.flocha.in/api");
         var data;
         var promise = new Promise((resolve, reject)=>{
-            explorer.getAddressProperties(saveAddress, "balance")
+            explorer.getAddressProperties(address, "balance")
                 .then(result => {
                     // console.log("result是啥：",result);
                     data = result;
@@ -34,8 +33,11 @@ RPC.methods = {
     },
     //获取交易记录
     get_transactions(address){
-        if (address != null)
-            saveAddress = address;
+        //目前这句有问题 todo
+        if (address == null || address == ""){
+            return {"error":"address is null", "code":"40001"}
+        }
+
         let explorer = new Insight("https://livenet.flocha.in/api");
         var data;
         var promise = new Promise((resolve, reject)=>{
@@ -54,12 +56,9 @@ RPC.methods = {
     },
     //查询交易手续费
     get_transaction_fee(wif, address, value){
-        if (wif != null)
-            saveWif = wif;
-        if (address != null)
-            saveAddress = address;
-        if (value != null)
-            saveValue = value;
+        if (wif ==null || address == null && value == null){
+            return {"error":"wif, address, value have key is null", "code":"40002"}
+        }
         let explorer = new Insight("https://livenet.flocha.in/api");
         var explprerWallet = new ExplprerWallet({ network: 'mainnet', wif: saveWif });
         var output = {
@@ -83,12 +82,9 @@ RPC.methods = {
     },
     //转账
     set_transaction(wif, address, value){
-        if (wif != null)
-            saveWif = wif;
-        if (address != null)
-            saveAddress = address;
-        if (value != null)
-            saveValue = value;
+        if (wif ==null || address == null && value == null){
+            return {"error":"wif, address, value have key is null", "code":"40002"}
+        }
         let explorer = new Insight("https://livenet.flocha.in/api");
         var explprerWallet = new ExplprerWallet({ network: 'mainnet', wif: saveWif });
         var output = {

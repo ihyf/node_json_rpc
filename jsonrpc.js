@@ -98,7 +98,7 @@ JSONRPC.handleRequest = function (rpc, respond) {
             // console.log("method是啥：",method);
             // if(result==Promise)
             if(rpc.method=="get_balance"){
-                method()
+                result
                     .then(data=>{
                         // console.log("data是啥：",data);
                         respond(normalize(rpc, { result: data }));
