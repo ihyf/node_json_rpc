@@ -34,14 +34,14 @@ RPC.methods = {
     //获取交易记录
     get_transactions(address){
         //目前这句有问题 todo
-        if (address == null || address == ""){
-            return {"error":"address is null", "code":"40001"}
-        }
+        // if (address == null || address == ""){
+        //     return {"error":"address is null", "code":"40001"}
+        // }
 
         let explorer = new Insight("https://livenet.flocha.in/api");
         var data;
         var promise = new Promise((resolve, reject)=>{
-            explorer.getTransactionsForAddress(saveAddress)
+            explorer.getTransactionsForAddress(address)
                 .then(result => {
                     // console.log("result是啥：",result);
                     data = result;
@@ -56,14 +56,14 @@ RPC.methods = {
     },
     //查询交易手续费
     get_transaction_fee(wif, address, value){
-        if (wif ==null || address == null && value == null){
-            return {"error":"wif, address, value have key is null", "code":"40002"}
-        }
+        // if (wif ==null || address == null && value == null){
+        //     return {"error":"wif, address, value have key is null", "code":"40002"}
+        // }
         let explorer = new Insight("https://livenet.flocha.in/api");
-        var explprerWallet = new ExplprerWallet({ network: 'mainnet', wif: saveWif });
+        var explprerWallet = new ExplprerWallet({ network: 'mainnet', wif: wif });
         var output = {
-            address: saveAddress,
-            value: 1e8*saveValue
+            address: address,
+            value: 1e8*value
         }
         var data;
         var promise = new Promise((resolve, reject)=>{
@@ -82,14 +82,14 @@ RPC.methods = {
     },
     //转账
     set_transaction(wif, address, value){
-        if (wif ==null || address == null && value == null){
-            return {"error":"wif, address, value have key is null", "code":"40002"}
-        }
+        // if (wif ==null || address == null && value == null){
+        //     return {"error":"wif, address, value have key is null", "code":"40002"}
+        // }
         let explorer = new Insight("https://livenet.flocha.in/api");
-        var explprerWallet = new ExplprerWallet({ network: 'mainnet', wif: saveWif });
+        var explprerWallet = new ExplprerWallet({ network: 'mainnet', wif: wif });
         var output = {
-            address: saveAddress,
-            value: 1e8*saveValue
+            address: address,
+            value: 1e8*value
         }
         var data;
         var promise = new Promise((resolve, reject)=>{
@@ -190,5 +190,5 @@ http.createServer(function (request, response) {
     } else {
         routes["/404"](request, response);
     }
-}).listen(8889);
+}).listen(8889, '0.0.0.0');
 console.log("服务已启动")

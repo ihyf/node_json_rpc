@@ -107,7 +107,7 @@ JSONRPC.handleRequest = function (rpc, respond) {
                         respond(normalize(rpc, {result: {"error": "get_balance fail", "code": "50001"}}))
                     })
             } else if(rpc.method=="get_transactions"){
-                method()
+                result
                     .then(data=>{
                         // console.log("data是啥：",data);
                         respond(normalize(rpc, { result: data }));
@@ -116,7 +116,7 @@ JSONRPC.handleRequest = function (rpc, respond) {
                         respond(normalize(rpc, {result: {"error": "get_transactions fail", "code": "50002"}}))
                     })
             } else if(rpc.method=="get_transaction_fee"){
-                method()
+                result
                     .then(data=>{
                         // console.log("data是啥：",data);
                         respond(normalize(rpc, { result: data }));
@@ -125,7 +125,7 @@ JSONRPC.handleRequest = function (rpc, respond) {
                         respond(normalize(rpc, {result: {"error": "get_transaction_fee fail", "code": "50003"}}))
                     })
             } else if(rpc.method=="set_transaction"){
-                method()
+                result
                     .then(data=>{
                         // console.log("data是啥：",data);
                         respond(normalize(rpc, { result: data }));
