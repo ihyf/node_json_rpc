@@ -32,7 +32,7 @@ RPC.methods = {
         return promise
     },
     //获取交易记录
-    get_transactions(address){
+    get_transactions(address, page){
         //目前这句有问题 todo
         // if (address == null || address == ""){
         //     return {"error":"address is null", "code":"40001"}
@@ -51,7 +51,8 @@ RPC.methods = {
                     console.log("get_transactions error");
                     reject(err)
                 })
-        })
+        });
+        promise["address"] = address
         return promise
     },
     //查询交易手续费

@@ -109,8 +109,37 @@ JSONRPC.handleRequest = function (rpc, respond) {
             } else if(rpc.method=="get_transactions"){
                 result
                     .then(data=>{
-                        // console.log("data是啥：",data);
-                        respond(normalize(rpc, { result: data }));
+                        var total = data.total;
+                        var txs = data.txs;
+                        var d = {
+                            "total": total,
+                            "txs": []
+                        }
+                        var in_or_out = "out";
+                        address = result.address;
+                        txs.forEach(function(item,index){
+                            if (address == item.vin[0].addr){
+                                in_or_out = "out"
+                            }else if (address == item.vout[0].scriptPubKey.addresses[0]){
+                                in_or_out = "in"
+                            }
+                            d.txs.push({
+                                "txid": item.txid,
+                                "floData": item.floData,
+                                "fees": item.fees,
+                                "balance": item.valueOut,
+                                "fromAddress": item.vin[0].addr,
+                                "toAddress": item.vout[0].scriptPubKey.addresses[0],
+                                "value": item.vout[0].value,
+                                "blockheight": item.blockheight,
+                                "time": item.time,
+                                "blocktime": item.blocktime,
+                                "status": 1,
+                                "in_or_out": in_or_out
+                            })
+                        });
+
+                        respond(normalize(rpc, { result: d }));
                     })
                     .catch(err=>{
                         respond(normalize(rpc, {result: {"error": "get_transactions fail", "code": "50002"}}))
