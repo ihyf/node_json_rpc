@@ -56,7 +56,7 @@ RPC.methods = {
         return promise
     },
     //查询交易手续费
-    get_transaction_fee(wif, address, value){
+    get_transaction_fee(wif, address, value, flodata){
         // if (wif ==null || address == null && value == null){
         //     return {"error":"wif, address, value have key is null", "code":"40002"}
         // }
@@ -68,7 +68,7 @@ RPC.methods = {
         }
         var data;
         var promise = new Promise((resolve, reject)=>{
-            explprerWallet.buildInputsAndOutputs('', output)
+            explprerWallet.buildInputsAndOutputs(flodata, output)
                 .then(result => {
                     // console.log("result是啥：",result);
                     data = result;
@@ -82,7 +82,7 @@ RPC.methods = {
         return promise
     },
     //转账
-    set_transaction(wif, address, value){
+    set_transaction(wif, address, value, flodata){
         // if (wif ==null || address == null && value == null){
         //     return {"error":"wif, address, value have key is null", "code":"40002"}
         // }
@@ -94,7 +94,7 @@ RPC.methods = {
         }
         var data;
         var promise = new Promise((resolve, reject)=>{
-            explprerWallet.sendTx(output, '')
+            explprerWallet.sendTx(output, flodata)
                 .then(result => {
                     // console.log("result是啥：",result);
                     data = result;
