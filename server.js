@@ -107,6 +107,70 @@ RPC.methods = {
         })
         return promise
     },
+    //get utxo
+    get_address_utxo(address){
+        let explorer = new Insight("https://livenet.flocha.in/api");
+
+        let utxo;
+        var promise = new Promise((resolve, reject)=>{
+            explorer.getAddressUtxo(address)
+                .then(result => {
+                    // console.log("result是啥：",result);
+                    data = result;
+                    resolve(data)
+                })
+                .catch(err=>{
+                    console.log("get utxo error");
+                    reject(err)
+                })
+        })
+        return promise
+    },
+    //broadcast_raw_hex
+    broadcast_raw_hex(hex){
+
+        let explorer = new Insight("https://livenet.flocha.in/api");
+        // hexxx = "0200000001243f3e430f6334dfb366c971cb917b2793fbf3bdc8241914e776e95ca80a698e010000006b483045022100b74b438577de1c2ea7b8eb1ebd58d3a05819eee43ce8d05ae00a3b950e4291a202205e18a50f8270529fcf093a4c28846dd2587f9bbc7cda3cc0c4148bf7ed183a260121024f5374c77ad80945578b1894246798d3ef6abdacba254c0b5b937d3d8b331bb4ffffffff0240420f00000000001976a914e6ac71da35d81b8549701d15581a63d4028deb6088acaa419d71000000001976a91440b1a4a6fc7c8b88ef2a1beac1fe3de118e8d08888ac0000000000"
+        var promise = new Promise((resolve, reject)=>{
+            explorer.broadcastRawTransaction(hex)
+                .then(result => {
+                    console.log("result是啥：",result);
+                    data = result;
+                    resolve(data)
+                })
+                .catch(err=>{
+                    console.log(err);
+                    console.log("broadcastRawHex error");
+                    reject(err);
+                })
+        })
+        return promise
+    },
+    //broadcast_raw_hex1
+    broadcast_raw_hex1(hex){
+
+        let explorer = new Insight("https://livenet.flocha.in/api");
+        var explprerWallet = new ExplprerWallet({ network: 'mainnet', wif: "REY4ZqznnrjiiUGHbyj9FRYqW1bPQb8tQdGP6W64HFFJdbN927sE" });
+        var output = {
+            address: "FBjBWwd4Bm8MAYdJqqLB2pvDXzP1AomBXK",
+            value: 1e8*0.1
+        }
+        var data;
+        hex = "0200000001c2f363836ac944f31e397a2c750eaa208562f6865b19ec7890d280f03d625fae010000006a4730440220196481d17e3c8dcb0df2c41884f48ec85367cfbeb65cf3cecd9f42a67174df9e022040ead1dc31454d024100a7127c4a66f258bc1f83175e4e4f4a1fa73d5f1b01d70121024f5374c77ad80945578b1894246798d3ef6abdacba254c0b5b937d3d8b331bb4ffffffff0240420f00000000001976a914e6ac71da35d81b8549701d15581a63d4028deb6088acc822cb71000000001976a91440b1a4a6fc7c8b88ef2a1beac1fe3de118e8d08888ac0000000000"
+        var promise = new Promise((resolve, reject)=>{
+            explprerWallet.sendTx1(output, "")
+                .then(result => {
+                    // console.log("result是啥：",result);
+                    data = result;
+                    resolve(data)
+                })
+                .catch(err=>{
+                    console.log("set_transaction error");
+                    reject(err)
+                })
+        })
+        return promise
+    }
 };
 
 

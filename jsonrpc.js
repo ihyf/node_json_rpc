@@ -162,6 +162,25 @@ JSONRPC.handleRequest = function (rpc, respond) {
                     .catch(err=>{
                         respond(normalize(rpc, {result: {"error": "set_transaction fail", "code": "50004"}}))
                     })
+            } else if(rpc.method=="get_address_utxo"){
+                result
+                    .then(data=>{
+                        // console.log("data是啥：",data);
+                        respond(normalize(rpc, { result: data }));
+                    })
+                    .catch(err=>{
+                        respond(normalize(rpc, {result: {"error": "get_address_utxo fail", "code": "50005"}}))
+                    })
+            }else if(rpc.method=="broadcast_raw_hex"){
+                result
+                    .then(data=>{
+                        // console.log("data是啥：",data);
+                        respond(normalize(rpc, { result: data }));
+                    })
+                    .catch(err=>{
+                        console.log(err);
+                        respond(normalize(rpc, {result: {"error": "broadcast_raw_hex fail", "code": "50006"}}))
+                    })
             } else {
                 respond(normalize(rpc, { result: result }));
             }
