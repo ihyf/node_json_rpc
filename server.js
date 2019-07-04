@@ -4,6 +4,7 @@ const url = require('url');
 const RPC = require('./jsonrpc');
 const ExplprerWallet = require('js-oip/lib/modules/wallets/ExplorerWallet').default;
 const Insight = require('insight-explorer').Insight;
+const livenet = "http://47.92.250.61:8080/api"
 
 
 RPC.methods = {
@@ -15,7 +16,7 @@ RPC.methods = {
             return {"error":"address is null", "code":"40001"}
         }
 
-        let explorer = new Insight("https://livenet.flocha.in/api");
+        let explorer = new Insight(livenet);
         var data;
         var promise = new Promise((resolve, reject)=>{
             explorer.getAddressProperties(address, "balance")
@@ -38,7 +39,7 @@ RPC.methods = {
         //     return {"error":"address is null", "code":"40001"}
         // }
 
-        let explorer = new Insight("https://livenet.flocha.in/api");
+        let explorer = new Insight(livenet);
         var data;
         var promise = new Promise((resolve, reject)=>{
             explorer.getTransactionsForAddress(address)
@@ -60,7 +61,7 @@ RPC.methods = {
         // if (wif ==null || address == null && value == null){
         //     return {"error":"wif, address, value have key is null", "code":"40002"}
         // }
-        let explorer = new Insight("https://livenet.flocha.in/api");
+        let explorer = new Insight(livenet);
         var explprerWallet = new ExplprerWallet({ network: 'mainnet', wif: wif });
         var output = {
             address: address,
@@ -86,7 +87,7 @@ RPC.methods = {
         // if (wif ==null || address == null && value == null){
         //     return {"error":"wif, address, value have key is null", "code":"40002"}
         // }
-        let explorer = new Insight("https://livenet.flocha.in/api");
+        let explorer = new Insight(livenet);
         var explprerWallet = new ExplprerWallet({ network: 'mainnet', wif: wif });
         var output = {
             address: address,
@@ -109,7 +110,7 @@ RPC.methods = {
     },
     //get utxo
     get_address_utxo(address){
-        let explorer = new Insight("https://livenet.flocha.in/api");
+        let explorer = new Insight(livenet);
 
         let utxo;
         var promise = new Promise((resolve, reject)=>{
@@ -129,7 +130,7 @@ RPC.methods = {
     //broadcast_raw_hex
     broadcast_raw_hex(hex){
 
-        let explorer = new Insight("https://livenet.flocha.in/api");
+        let explorer = new Insight(livenet);
         // hexxx = "0200000001243f3e430f6334dfb366c971cb917b2793fbf3bdc8241914e776e95ca80a698e010000006b483045022100b74b438577de1c2ea7b8eb1ebd58d3a05819eee43ce8d05ae00a3b950e4291a202205e18a50f8270529fcf093a4c28846dd2587f9bbc7cda3cc0c4148bf7ed183a260121024f5374c77ad80945578b1894246798d3ef6abdacba254c0b5b937d3d8b331bb4ffffffff0240420f00000000001976a914e6ac71da35d81b8549701d15581a63d4028deb6088acaa419d71000000001976a91440b1a4a6fc7c8b88ef2a1beac1fe3de118e8d08888ac0000000000"
         var promise = new Promise((resolve, reject)=>{
             explorer.broadcastRawTransaction(hex)
