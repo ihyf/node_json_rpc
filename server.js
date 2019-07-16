@@ -4,8 +4,8 @@ const url = require('url');
 const RPC = require('./jsonrpc');
 const ExplprerWallet = require('js-oip/lib/modules/wallets/ExplorerWallet').default;
 const Insight = require('insight-explorer').Insight;
-const livenet = "http://47.92.250.61:8080/api"
-const livenet1 = "https://livenet.flocha.in/api"
+const livenet1 = "http://47.92.250.61:8080/api"
+const livenet = "https://livenet.flocha.in/api"
 
 
 RPC.methods = {
@@ -131,7 +131,7 @@ RPC.methods = {
     //broadcast_raw_hex
     broadcast_raw_hex(hex){
 
-        let explorer = new Insight(livenet1);
+        let explorer = new Insight(livenet);
         var promise = new Promise((resolve, reject)=>{
             explorer.broadcastRawTransaction(hex)
                 .then(result => {
