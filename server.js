@@ -4,8 +4,8 @@ const url = require('url');
 const RPC = require('./jsonrpc');
 const ExplprerWallet = require('js-oip/lib/modules/wallets/ExplorerWallet').default;
 const Insight = require('insight-explorer').Insight;
-const livenet1 = "http://47.92.250.61:8080/api"
-const livenet = "https://livenet.flocha.in/api"
+const livenet = "http://47.92.250.61:8080/api"
+const livenet1 = "https://livenet.flocha.in/api"
 
 
 RPC.methods = {

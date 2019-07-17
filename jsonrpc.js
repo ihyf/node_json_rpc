@@ -142,6 +142,7 @@ JSONRPC.handleRequest = function (rpc, respond) {
                         respond(normalize(rpc, { result: d }));
                     })
                     .catch(err=>{
+                        console.log(err);
                         respond(normalize(rpc, {result: {"error": "get_transactions fail", "code": "50002"}}))
                     })
             } else if(rpc.method=="get_transaction_fee"){
