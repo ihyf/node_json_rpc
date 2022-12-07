@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
-    "js-oip": "^2.1.0"
+    "js-oip": "^2.4.9"
   },
   "keywords": [],
   "author": "",
